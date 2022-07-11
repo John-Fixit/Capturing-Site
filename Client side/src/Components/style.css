@@ -17,21 +17,9 @@
                     padding: 0vh 7vh !important;
                 }
 
-                .dropdown_menu {
-                    border-top: 5px solid #FF5722 !important;
-                }
-
-                .bgs {
-                    background-color: #FF5722;
-                }
-
                 /*------------------------- Cart ---------------------*/
                 .textColor {
                     color: #E5B700 !important;
-                }
-
-                .btnbg {
-                    background-color: #FF5722 !important;
                 }
                 .short_address{
                     display: none;

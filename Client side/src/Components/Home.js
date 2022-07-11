@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import style from './style.css'
-import img1 from '../Images/bgImg1.jpg'
+import img1 from '../Images/marshal.png'
 import img2 from '../Images/bgImg2.jpg'
 import img3 from '../Images/bgImg3.jpg'
-import { FaCartPlus } from 'react-icons/fa'
+import { FaTrash } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import RA from '../Images/R.A logo.png'
 
 function Home() {
   useEffect(() => {
@@ -16,23 +18,49 @@ function Home() {
     AOS.refresh()
   }, [])
   const navigate = useNavigate()
-  const [products, setproducts] = useState([])
-  const HOMEURI = 'http://localhost:4000/user/home'
-  const CARTURI = 'http://localhost:4000/user/cart'
-  const [userId, setuserId] = useState('')
-  const [index, setindex] = useState('')
-  const [productVariation, setproductVariation] = useState(1)
+  const HOMEURI = 'https://royaliwacapturingsite.herokuapp.com/home'
+  const DELETEURI = 'https://royaliwacapturingsite.herokuapp.com/delete'
   const [isLoading, setisLoading] = useState(true)
+  const [allMember, setallMember] = useState([])
   const getHome = () => {
-    setisLoading(false)
+    axios.get(HOMEURI).then((res) => {
+      console.log(res.data);
+      const responseFromServer = res.data
+      if (responseFromServer.status) {
+        setisLoading(false)
+        setallMember(() => {
+          return responseFromServer.member
+        })
+      }
+      else {
+        setisLoading(true)
+      }
+    })
+  }
+  const dlt=(memberId)=>{
+    console.log(memberId);
+    axios.post()
   }
   return (
     <>
       <div className='container-fluid cont_fluid'>
+        <div className='container-fluid padding_nav fixed-top'>
+          <div className='container d-flex justify-content-between'>
+            <img src={RA} alt='loading...' className='card-img-top' style={{ width: '10vh', height: '10vh' }} />
+            <div className='pt-3'>
+              <div className='text-uppercase text-center py-auto text-light fs-3 address'>Nigerian Baptist Convention</div>
+              <div className='text-uppercase text-center py-auto text-light fs-3 short_address'>N. B. C.</div>
+              <div className='textColor text-center fs-4 address'>Ogbomoso Baptist Conference</div>
+              <div className='textColor text-center fs-4 short_address'>Ogbomoso B. C.</div>
+              <div className='text-light text-center fs-5 iwa'>Iwa-Bi-Olorun Baptist Association</div>
+            </div>
+            <img src={RA} alt='loading...' className='card-img-top' style={{ width: '10vh', height: '10vh' }} />
+          </div>
+        </div>
         <div id="carouselExampleFade" className="col-md-12 carousel slide carousel-fade" data-bs-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src={img1} alt="..." className='card-img-top carousel_img' style={{ height: '70vh' }} />
+              <img src={img1} alt="..." className='card-img-top carousel_img'/>
             </div>
             <div className="carousel-item">
               <img src={img2} alt="..." className='card-img-top carousel_img' style={{ height: '70vh' }} />
@@ -50,39 +78,39 @@ function Home() {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
-        <div className='container-fluid products_row'>
-          <div className='d-flex justify-content-between'>
-            <h4 className='text-capitalize'>Popular product</h4>
-            <h5 className='text-muted'>See all product</h5>
-          </div>
+        <div className='text-end'>
+          <Link to='/' className='textColor padding_nav rounded-3 py-2 '>Upload Page</Link>
         </div>
-        <div className='container-fluid'>
+        <div className='container-fluid mt-3 text-center'>
           {
-            isLoading ? <div class="spinner-border text-warning bg-dark" role="status">
-              <span class="visually-hidden">Loading...</span>
+            isLoading ? <div className="spinner-border text-warning bg-dark opacity-75" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div> :
               <div className='col-12 products_row'>
                 <div className='row'>
+                  {
+                    allMember.map((eachMember) => (
+                      <div className='col-lg-3 col-md-6 col-sm-12 mt-3' >
+                        <div className="card rounded-3 shadow h-100 col-sm-12" data-aos='zoom-in' data-aos-delay='50' >
 
-                  <div className='col-lg-3 col-md-6 mt-3' >
-                    <div className="card h-100 rounded-3 shadow" data-aos='zoom-in' data-aos-delay='50' >
-                      <img src={img1} className="card-img-top mx-auto" alt="..." />
-                      <div className="card-body">
-                        <h6 className="card-title">Candidate Name</h6>
-                        <p className='fw-bold'>Rank</p>
-                        <p className="card-text">Church </p>
+                          <img src={eachMember.memberImage} className="card-img-top mx-auto pt-2 w-75" alt="..." />
+                          <div className="card-body text-start">
+                            <h6 className="card-title fw-bold">Name : {eachMember.memberName}</h6>
+                            <p className='fw-bold'>Rank : {eachMember.rank}</p>
+                            <p className="card-text fw-bold">Church : {eachMember.church}</p>
+                          </div>
+                          <div className="card-footer text-center">
+                            <button className='btn padding_nav py- textColor w-100' style={{ backgroundColor: '#2D1783 important' }} onClick={()=>dlt({memberId: eachMember._id})}><FaTrash /> Delete</button>
+                          </div>
+                        </div>
                       </div>
-                      <div className="card-footer">
-
-                      </div>
-                    </div>
-                  </div>
-
-
+                    ))
+                  }
                 </div>
               </div>
           }
         </div>
+        <h5 className='card-footer text-center py-0 textColor fixed-bottom'>"We are ambassadors for Christ (2 Corintians 5 : 20)"</h5>
       </div>
     </>
   )

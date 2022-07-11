@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require('mongoose')
 require('dotenv').config()
 const PORT = process.env.PORT
-const URL = process.env.URL
 const userRouter = require('./Routes/user.route')
 const cors = require('cors')
 const bodyParser = require('body-parser');
@@ -12,7 +11,8 @@ const cloudinary = require('cloudinary')
 app.use(bodyParser.urlencoded({extended:true, limit: '100mb'}))
 app.use(json({limit: '100mb'}))
 app.use(cors())
-mongoose.connect(URL, (err)=>{
+const URL = process.env.URL
+mongoose.connect('mongodb+srv://Johnfixit:gufaith996.com@cluster0.cflf6.mongodb.net/Capturing_db?retryWrites=true&w=majority', (err)=>{
     if(err){
         console.log(`mongoDB not connected`);
     }
@@ -20,7 +20,7 @@ mongoose.connect(URL, (err)=>{
         console.log(`MongoDB connected`);
     }
 })
-app.use('/user', userRouter)
+app.use('/', userRouter)
 
 
 app.listen(PORT, ()=>{

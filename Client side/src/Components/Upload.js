@@ -14,13 +14,12 @@ function Upload() {
     const [message, setmessage] = useState('')
     const [status, setstatus] = useState(false)
     const [isLoading, setisLoading] = useState(true)
-    const URI = 'http://localhost:4000/user/upload'
+    const URI = 'https://royaliwacapturingsite.herokuapp.com/upload'
     const selectImage = (e) => {
         const selectedImage = e.target.files[0]
         const reader = new FileReader()
         reader.readAsDataURL(selectedImage)
         reader.onload = () => {
-            console.log(reader.result);
             const newFile = reader.result
             setconvertedImage(newFile)
         }
@@ -32,7 +31,6 @@ function Upload() {
             church: ''
         },
         onSubmit: (values) => {
-            console.log(values);
             const details = { memberName: values.memberName, rank: values.rank, church: values.church, convertedImage }
             axios.post(URI, details).then((res) => {
                 const responseFromServer = res.data
@@ -63,7 +61,7 @@ function Upload() {
         })
     })
     const ok = () => {
-
+        window.location.reload()
     }
     return (
         <>
@@ -125,13 +123,13 @@ function Upload() {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-lg-6 px-4 py-2 d-non'>
-                            <div className='card mx-auto pb-3 shadow'>
+                        <div className={status ? 'col-lg-6 px-4 py-2' : 'col-lg-6 px-4 py-2 d-none'}>
+                                <div className='card mx-auto pb-3 shadow'>
                                 <h3 className='card-header text-center textColor'>Image Uploaded</h3>
                                 <div className='card-body'>
                                     <div className='row'>
                                         <div className='col-6'>
-                                            <img src={img1} className="card-img-top mx-auto" alt="..." />
+                                            <img src={uploadedImage} className="card-img-top mx-auto" alt="..." />
                                         </div>
                                         <div className='col-6'>
                                             <div className="card-body">

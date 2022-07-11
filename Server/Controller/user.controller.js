@@ -23,7 +23,7 @@ const upload = (req, res) => {
             const form = new userModel({memberName, rank, church, memberImage })
             form.save((err)=>{
                 if(err){
-                    res.send({message: `Network error user not yet Registered`, status})
+                    res.send({message: `Network error user not yet Registered`, status : false})
                 }
                 else{
                     res.send({message: `Registratin and uploading successfull`, status: true, memberImage, rank, church, memberName})
@@ -35,7 +35,21 @@ const upload = (req, res) => {
 
 
 const home = (req, res) => {
-    
+    userModel.find((err, member)=>{
+        if(err){
+            res.send({message: `Internal server error`, status: false})
+        }
+        else{
+            res.send({message: `Registered members`, status: true, member})
+        }
+    })
 }
 
-module.exports = { upload, home, }
+const dlt=(req, res)=>{
+    const itemDlt = req.body
+    userModel.deleteOne({_id: itemDlt}).then((remains)=>{
+        console.log(remains);
+    })
+}
+
+module.exports = { upload, home, dlt}

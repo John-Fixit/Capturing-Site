@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/admin' element={<Home />}/>
         <Route path='/' element={<Upload />} />
+        <Route path='/admin' element={<Home />}/>
       </Routes>
     </>
   )
