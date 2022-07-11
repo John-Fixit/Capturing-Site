@@ -24,7 +24,6 @@
                 .short_address{
                     display: none;
                 }
-
                 @media screen and (max-width: 890px) and (min-width: 50px) {
                     .carousel_img {
                         height: 40vh !important;

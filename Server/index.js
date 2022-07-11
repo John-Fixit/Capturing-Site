@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended:true, limit: '100mb'}))
 app.use(json({limit: '100mb'}))
 app.use(cors())
 const URL = process.env.URL
-mongoose.connect('mongodb+srv://Johnfixit:gufaith996.com@cluster0.cflf6.mongodb.net/Capturing_db?retryWrites=true&w=majority', (err)=>{
+mongoose.connect(URL, (err)=>{
     if(err){
         console.log(`mongoDB not connected`);
     }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import style from './style.css'
 import img1 from '../Images/marshal.png'
-import img2 from '../Images/bgImg2.jpg'
+import img2 from '../Images/R.A logo.png'
 import img3 from '../Images/bgImg3.jpg'
 import { FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
@@ -19,7 +19,7 @@ function Home() {
   }, [])
   const navigate = useNavigate()
   const HOMEURI = 'https://royaliwacapturingsite.herokuapp.com/home'
-  const DELETEURI = 'https://royaliwacapturingsite.herokuapp.com/delete'
+  // const DELETEURI = 'https://royaliwacapturingsite.herokuapp.com/filtUser'
   const [isLoading, setisLoading] = useState(true)
   const [allMember, setallMember] = useState([])
   const getHome = () => {
@@ -36,10 +36,6 @@ function Home() {
         setisLoading(true)
       }
     })
-  }
-  const dlt=(memberId)=>{
-    console.log(memberId);
-    axios.post()
   }
   return (
     <>
@@ -60,7 +56,7 @@ function Home() {
         <div id="carouselExampleFade" className="col-md-12 carousel slide carousel-fade" data-bs-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src={img1} alt="..." className='card-img-top carousel_img'/>
+              <img src={img1} alt="..." className='card-img-top carousel_img' style={{ height: '70vh' }}/>
             </div>
             <div className="carousel-item">
               <img src={img2} alt="..." className='card-img-top carousel_img' style={{ height: '70vh' }} />
@@ -90,18 +86,18 @@ function Home() {
                 <div className='row'>
                   {
                     allMember.map((eachMember) => (
-                      <div className='col-lg-3 col-md-6 col-sm-12 mt-3' >
+                      <div className='col-lg-3 col-md-6 col-sm-12 mt-3' key={eachMember._id}>
                         <div className="card rounded-3 shadow h-100 col-sm-12" data-aos='zoom-in' data-aos-delay='50' >
 
-                          <img src={eachMember.memberImage} className="card-img-top mx-auto pt-2 w-75" alt="..." />
+                          <img src={eachMember.memberImage} className="card-img-top mx-auto pt-2 w-75 " alt="..." />
                           <div className="card-body text-start">
                             <h6 className="card-title fw-bold">Name : {eachMember.memberName}</h6>
                             <p className='fw-bold'>Rank : {eachMember.rank}</p>
                             <p className="card-text fw-bold">Church : {eachMember.church}</p>
                           </div>
-                          <div className="card-footer text-center">
+                          {/* <div className="card-footer text-center">
                             <button className='btn padding_nav py- textColor w-100' style={{ backgroundColor: '#2D1783 important' }} onClick={()=>dlt({memberId: eachMember._id})}><FaTrash /> Delete</button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     ))

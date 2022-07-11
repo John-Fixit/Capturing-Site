@@ -44,12 +44,9 @@ const home = (req, res) => {
         }
     })
 }
-
-const dlt=(req, res)=>{
-    const itemDlt = req.body
-    userModel.deleteOne({_id: itemDlt}).then((remains)=>{
-        console.log(remains);
-    })
+const deleteMember=(req, res)=>{
+    res.send({message: `Registered members`, status: true, member})
 }
 
-module.exports = { upload, home, dlt}
+
+module.exports = { upload, home, deleteMember }
